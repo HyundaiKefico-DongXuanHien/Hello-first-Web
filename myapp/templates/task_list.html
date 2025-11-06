@@ -1,0 +1,49 @@
+<!--
+# ============================================================================
+# FILE NAME     : myapp/task_list.py
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define HTML
+# HISTORY       : 05/11/2025
+# ============================================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Tracking</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Task Tracking</h1>
+    <form method="GET">
+        <input type="text" name="search" placeholder="Search assignee" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th><th>Request Title</th><th>Priority</th><th>Reporter</th>
+                <th>Assignee</th><th>Status</th><th>Created</th><th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.key }}</td>
+                <td>{{ task.request_title }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.reporter }}</td>
+                <td>{{ task.assignee }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.created }}</td>
+                <td>{{ task.updated }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
