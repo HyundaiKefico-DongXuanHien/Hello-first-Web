@@ -1,0 +1,26 @@
+<!--
+# ============================================================================
+# FILE NAME     : myapp/templates/report.html
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define report page
+# HISTORY       : 11/11/2025
+# ============================================================================
+-->
+
+{% extends "home.html" %}
+{% block title %}Report{% endblock %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static '/report/report.css' %}">
+<!-- Heading -->
+<div>
+    <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
+    <h1>Report Page</h1>
+    <p><center>This is where you can view reports.</center></p>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<!--
+# ============================================================================
+# FILE NAME     : myapp/templates/home.html
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define overall layout 
+# HISTORY       : 11/11/2025
+# ============================================================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ASW{% endblock %}</title>   <!-- Use Django template block to allow sub-file overwite title, if not default if ASW -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/home/home.css' %}">
+</head>
+
+<body>
+    <!-- Background image -->
+    {% if show_background %}
+    <div class="background-container"></div>
+    {% endif %}
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'task_list'%}">Tracking</a></li> <!-- Create link to route which has name task_list in urls.py -->
+            <li><a href="{% url 'document'%}">Document</a></li>
+            <li><a href="{% url 'report'%}">Report</a></li>
+            <li><a href="{% url 'tool'%}">Tool</a></li>
+        </ul>
+    </nav>
+
+    <!-- Content of page -->
+    <div class="content">
+        {% block content %}{% endblock %}   <!-- Overwrite content of child file  -->
+    </div>
+
+</body>
+</html>
