@@ -4,7 +4,7 @@
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
 # DESCRIPTION   : Define HTML
-# HISTORY       : 06/11/2025
+# HISTORY       : 07/11/2025
 # ============================================================================
 -->
 
@@ -15,13 +15,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Tracking</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static '/task_list/style.css' %}">
 </head>
 
 <body>
-    <div>       
+    <!-- Heading -->
+    <div>      
+        <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
         <h1>Task Tracking</h1>
-
     <form method="GET" class="search-form">
             <center>
             <input type="text" name="search" placeholder="Search keywords" value="{{ query }}">
@@ -29,6 +30,7 @@
             </center>
     </div>
 
+    <!-- Table -->
     <table>
         <thead>
             <tr>
@@ -78,7 +80,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for task in tasks %}
+            {% for task in page_obj %}
             <tr>
                 <td>{{ task.key }}</td>
                 <td>{{ task.request_title }}</td>
@@ -99,5 +101,24 @@
         </tbody>
     </table>
     </form> 
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if page_obj.has_previous %}  <!-- Check has privious page → Display "Previous" button -->
+            <a href="?page={{ page_obj.previous_page_number }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}&status={{ filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="page-link">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %} <!-- Display each page number -->
+            {% if num == page_obj.number %}  <!-- Current page number → marked with <span>. -->
+                <span class="current-page">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}&status={{ filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="current-page">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %} <!-- Check has next page → Display "Next" button -->
+            <a href="?page={{ page_obj.next_page_number }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}& filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="page-link">Next</a>
+        {% endif %}
+    </div>  
 </body>
 </html>

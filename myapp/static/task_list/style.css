@@ -1,0 +1,142 @@
+/* 
+# ============================================================================ 
+# FILE NAME     : myapp/views.py
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define CSS
+# HISTORY       : 07/11/2025
+# ============================================================================ 
+*/
+
+
+/*---------- Layout ---------- */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    background-color: #7f8fa8;
+    padding: 20px;
+}
+
+/*---------- Header ---------- */
+.header-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 140px; /* hoặc kích thước bạn muốn */
+    height: 120px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+/*---------- Search bar ---------- */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-form button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+
+/*---------- Table Styling ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #eef;
+}
+
+/* Priority & Status Colors */
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.high { background-color: #d9534f; }       /* Red */
+.medium { background-color: #ffc107; color: #000; } /* Yellow */
+.low { background-color: #5bc0de; }        /* Blue */
+
+.done { background-color: #28a745; }       /* Green */
+.in-progress { background-color: #ff9800; }/* Orange */
+.todo { background-color: #6c757d; }       /* Gray */
+
+
+/*---------- Pagination ---------- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.page-link {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+.page-link:hover {
+    background-color: #ddd;
+}
+.current-page {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+}
+
+

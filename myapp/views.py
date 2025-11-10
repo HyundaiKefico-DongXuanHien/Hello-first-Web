@@ -3,12 +3,13 @@
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
 # DESCRIPTION   : Handle logic to display
-# HISTORY       : 06/11/2025
+# HISTORY       : 07/11/2025
 # ============================================================================
 
 from django.shortcuts import render
 from .models import issue_data_table, issue_data_table_KVHS
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 def task_list(request):
     # Get value from search box
@@ -44,7 +45,12 @@ def task_list(request):
     table1 = issue_data_table.objects.filter(filter_condition)
     table2 = issue_data_table_KVHS.objects.filter(filter_condition)
     tasks = list(table1) + list(table2)
-    
+
+    # Pagination
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(tasks, 20)  # 20 task each page, object devide tasks to many page
+    page_obj = paginator.get_page(page_number)
+
     # Get unique value list for dropdown
     keys = sorted(set(issue_data_table.objects.values_list('key', flat=True)) |
                 set(issue_data_table_KVHS.objects.values_list('key', flat=True)))
@@ -58,7 +64,7 @@ def task_list(request):
                     set(issue_data_table_KVHS.objects.values_list('reporter', flat=True)))
 
     return render(request, 'task_list.html', {
-        'tasks': tasks,
+        'page_obj': page_obj,
         'query': query,
         'keys': keys,
         'priorities': priorities,
