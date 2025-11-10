@@ -1,0 +1,31 @@
+/* 
+# ============================================================================ 
+# FILE NAME     : myapp/satic/tool/tool.css
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define CSS
+# HISTORY       : 11/11/2025
+# ============================================================================ 
+*/
+
+
+/*---------- Header ---------- */
+div {
+    background-color: #7f8fa8;
+    padding: 20px;
+}
+
+.header-logo {
+    position: absolute;
+    top: 49.6px;
+    left: 20px;
+    width: 140px; /* hoặc kích thước bạn muốn */
+    height: 120px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+

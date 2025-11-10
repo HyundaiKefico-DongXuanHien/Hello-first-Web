@@ -1,0 +1,26 @@
+<!--
+# ============================================================================
+# FILE NAME     : myapp/templates/tool.html
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define document page
+# HISTORY       : 11/11/2025
+# ============================================================================
+-->
+
+{% extends "home.html" %}
+{% block title %}Tool{% endblock %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static '/tool/tool.css' %}">
+<!-- Heading -->
+ <div>
+    <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
+    <h1>Tool Page</h1>
+    <p><center>This is where you can manage tools.</center></p>
+ </div>
+ 
+
+{% endblock %}

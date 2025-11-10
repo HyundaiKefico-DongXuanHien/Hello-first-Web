@@ -1,0 +1,67 @@
+/* 
+# ============================================================================ 
+# FILE NAME     : myapp/satic/home/home.css
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define CSS
+# HISTORY       : 11/11/2025
+# ============================================================================ 
+*/
+
+
+/*---------- Layout ---------- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* Đưa ảnh ra sau nội dung */
+}
+
+/*---------- Navigation ---------- */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    padding: 14px 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar li:hover {
+    background-color: #575757;
+}
+
+
+/*---------- Conte ---------- */
+.content {
+    margin-top: 0px; /* avoid be cover by navbar */
+    padding: 20px;
+}

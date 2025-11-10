@@ -1,124 +1,121 @@
 <!--
 # ============================================================================
-# FILE NAME     : myapp/task_list.py
+# FILE NAME     : myapp/templates/task_list.html
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
-# DESCRIPTION   : Define HTML
-# HISTORY       : 07/11/2025
+# DESCRIPTION   : Define task_list page
+# HISTORY       : 11/11/2025
 # ============================================================================
 -->
 
+{% extends "home.html" %}     <!-- Inherit from base.html -->
+{% block title %}Task Tracking{% endblock %} <!-- Overwite title by "Task Tracking" -->
+{% block content %}  <!-- Start content of page -->
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Tracking</title>
-    <link rel="stylesheet" href="{% static '/task_list/style.css' %}">
-</head>
 
-<body>
-    <!-- Heading -->
-    <div>      
-        <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
-        <h1>Task Tracking</h1>
-    <form method="GET" class="search-form">
-            <center>
-            <input type="text" name="search" placeholder="Search keywords" value="{{ query }}">
-            <button type="submit">Search</button>
-            </center>
-    </div>
 
-    <!-- Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>Key
-                    <select name="key" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        {% for k in keys %}
-                            <option value="{{ k }}" {% if filters.key == k %}selected{% endif %}>{{ k }}</option>
-                        {% endfor %}
-                    </select>                   
-                </th> 
-                <th>Request Title</th>
-                <th>Priority
-                    <select name="priority" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        {% for p in priorities %}
-                            <option value="{{ p }}" {% if filters.priority == p %}selected{% endif %}>{{ p }}</option>
-                        {% endfor %}
-                    </select>          
-                </th>
-                <th>Reporter
-                    <select name="reporter" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        {% for r in reporters %}
-                            <option value="{{ r }}" {% if filters.reporter == r %}selected{% endif %}>{{ r }}</option>
-                        {% endfor %}
-                    </select>           
-                </th>
-                <th>Assignee
-                    <select name="assignee" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        {% for a in assignees %}
-                            <option value="{{ a }}" {% if filters.assignee == a %}selected{% endif %}>{{ a }}</option>
-                        {% endfor %}
-                    </select>
-                </th>
-                <th>Status
-                    <select name="status" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        {% for s in statuses %}
-                            <option value="{{ s }}" {% if filters.status == s %}selected{% endif %}>{{ s }}</option>
-                        {% endfor %}
-                    </select>
-                </th>
-                <th>Created</th>
-                <th>Updated</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in page_obj %}
-            <tr>
-                <td>{{ task.key }}</td>
-                <td>{{ task.request_title }}</td>
-                <td class="priority">
-                    <span class="badge {% if task.priority == 'High' %}high{% elif task.priority == 'Medium' %}medium{% else %}low{% endif %}">{{ task.priority }}
-                    </span>
-                </td>
-                <td>{{ task.reporter }}</td>
-                <td>{{ task.assignee }}</td>
-                <td class="status">
-                    <span class="badge {% if task.status == 'Done' %}done{% elif task.status == 'In Progress' %}in-progress{% else %}todo{% endif %}">{{ task.status }}
-                    </span>
-                </td>
-                <td>{{ task.created }}</td>
-                <td>{{ task.updated }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    </form> 
+<link rel="stylesheet" href="{% static '/task_list/task_list.css' %}">
+<!-- Heading -->
+<div>      
+    <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
+    <h1>Task Tracking</h1>
+<form method="GET" class="search-form">
+        <center>
+        <input type="text" name="search" placeholder="Search keywords" value="{{ query }}">
+        <button type="submit">Search</button>
+        </center>
+</div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        {% if page_obj.has_previous %}  <!-- Check has privious page → Display "Previous" button -->
-            <a href="?page={{ page_obj.previous_page_number }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}&status={{ filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="page-link">Previous</a>
-        {% endif %}
-
-        {% for num in page_obj.paginator.page_range %} <!-- Display each page number -->
-            {% if num == page_obj.number %}  <!-- Current page number → marked with <span>. -->
-                <span class="current-page">{{ num }}</span>
-            {% else %}
-                <a href="?page={{ num }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}&status={{ filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="current-page">{{ num }}</a>
-            {% endif %}
+<!-- Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Key
+                <select name="key" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for k in keys %}
+                        <option value="{{ k }}" {% if filters.key == k %}selected{% endif %}>{{ k }}</option>
+                    {% endfor %}
+                </select>                   
+            </th> 
+            <th>Request Title</th>
+            <th>Priority
+                <select name="priority" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for p in priorities %}
+                        <option value="{{ p }}" {% if filters.priority == p %}selected{% endif %}>{{ p }}</option>
+                    {% endfor %}
+                </select>          
+            </th>
+            <th>Reporter
+                <select name="reporter" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for r in reporters %}
+                        <option value="{{ r }}" {% if filters.reporter == r %}selected{% endif %}>{{ r }}</option>
+                    {% endfor %}
+                </select>           
+            </th>
+            <th>Assignee
+                <select name="assignee" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for a in assignees %}
+                        <option value="{{ a }}" {% if filters.assignee == a %}selected{% endif %}>{{ a }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+            <th>Status
+                <select name="status" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for s in statuses %}
+                        <option value="{{ s }}" {% if filters.status == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+            <th>Created</th>
+            <th>Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in page_obj %}
+        <tr>
+            <td>{{ task.key }}</td>
+            <td>{{ task.request_title }}</td>
+            <td class="priority">
+                <span class="badge {% if task.priority == 'High' %}high{% elif task.priority == 'Medium' %}medium{% else %}low{% endif %}">{{ task.priority }}
+                </span>
+            </td>
+            <td>{{ task.reporter }}</td>
+            <td>{{ task.assignee }}</td>
+            <td class="status">
+                <span class="badge {% if task.status == 'Done' %}done{% elif task.status == 'In Progress' %}in-progress{% else %}todo{% endif %}">{{ task.status }}
+                </span>
+            </td>
+            <td>{{ task.created }}</td>
+            <td>{{ task.updated }}</td>
+        </tr>
         {% endfor %}
+    </tbody>
+</table>
+</form> 
 
-        {% if page_obj.has_next %} <!-- Check has next page → Display "Next" button -->
-            <a href="?page={{ page_obj.next_page_number }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}& filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="page-link">Next</a>
+<!-- Pagination -->
+<div class="pagination">
+    {% if page_obj.has_previous %}  <!-- Check has privious page → Display "Previous" button -->
+        <a href="?page={{ page_obj.previous_page_number }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}&status={{ filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="page-link">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %} <!-- Display each page number -->
+        {% if num == page_obj.number %}  <!-- Current page number → marked with <span>. -->
+            <span class="current-page">{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}&status={{ filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="current-page">{{ num }}</a>
         {% endif %}
-    </div>  
-</body>
-</html>
+    {% endfor %}
+
+    {% if page_obj.has_next %} <!-- Check has next page → Display "Next" button -->
+        <a href="?page={{ page_obj.next_page_number }}&search={{ query }}&key={{ filters.key }}&priority={{ filters.priority }}& filters.status }}&assignee={{ filters.assignee }}&reporter={{ filters.reporter }}" class="page-link">Next</a>
+    {% endif %}
+</div>  
+
+
+{% endblock %} 

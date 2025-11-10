@@ -3,13 +3,16 @@
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
 # DESCRIPTION   : Handle logic to display
-# HISTORY       : 07/11/2025
+# HISTORY       : 11/11/2025
 # ============================================================================
 
 from django.shortcuts import render
 from .models import issue_data_table, issue_data_table_KVHS
 from django.db.models import Q
 from django.core.paginator import Paginator
+
+def home(request):
+    return render(request, 'home.html', {'show_background': True})
 
 def task_list(request):
     # Get value from search box
@@ -77,7 +80,16 @@ def task_list(request):
             'status': status_filter,
             'assignee': assignee_filter,
             'reporter': reporter_filter
-        }
-    })
-    
+        },
+        'show_background': False
+    }) 
+
+def document(request):
+    return render(request, 'document.html', {'show_background': False})
+
+def report(request):
+    return render(request, 'report.html', {'show_background': False})
+
+def tool(request):
+    return render(request, 'tool.html', {'show_background': False})
 
