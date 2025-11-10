@@ -15,5 +15,5 @@ urlpatterns = [
     path('document/', views.document, name='document'),
     path('report/', views.report, name='report'),
     path('tool/', views.tool, name='tool'),
-    
+    path('run_tool/<str:tool_id>/', views.run_tool, name='run_tool')  #Get agrument tool_id from html and add it into route
 ]

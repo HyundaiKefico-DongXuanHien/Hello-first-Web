@@ -3,7 +3,7 @@
 # FILE NAME     : myapp/templates/tool.html
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
-# DESCRIPTION   : Define document page
+# DESCRIPTION   : Define tool page
 # HISTORY       : 11/11/2025
 # ============================================================================
 -->
@@ -16,11 +16,49 @@
 
 <link rel="stylesheet" href="{% static '/tool/tool.css' %}">
 <!-- Heading -->
- <div>
+<div class="heading">
     <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
     <h1>Tool Page</h1>
     <p><center>This is where you can manage tools.</center></p>
- </div>
- 
+</div>
+
+
+ <!-- Message window -->
+{% if messages %}
+<div>
+    {% for message in messages %}
+        <p style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %};">
+            {{ message }}
+        </p>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+ <!-- List tools -->
+<table>
+   <thead>
+      <th>List Tools</th>
+      <th>Note</th>
+   </thead>
+   <tbody>
+      {% for tool in tools %}
+      <tr>
+         <td>
+            <span>{{ tool.name }}</span>
+            <a  href="{% url 'run_tool' tool.id %}">Run</a>
+         </td>
+         <td>
+            {% if tool.id == "tool1" %}
+               <p>Tracking JIRA tool</p>
+            {% endif %}
+            {% if tool.id == "tool2" %}
+               <p>Not define</p>
+            {% endif %}            
+         </td>
+      </tr>
+      {% endfor %}
+   </tbody>
+</table>
 
 {% endblock %}
