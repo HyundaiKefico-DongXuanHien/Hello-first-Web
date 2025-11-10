@@ -11,6 +11,13 @@ from .models import issue_data_table, issue_data_table_KVHS
 from django.db.models import Q
 from django.core.paginator import Paginator
 
+import importlib
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+
+
 def home(request):
     return render(request, 'home.html', {'show_background': True})
 
@@ -90,6 +97,31 @@ def document(request):
 def report(request):
     return render(request, 'report.html', {'show_background': False})
 
+# ---------- Tool ----------
 def tool(request):
-    return render(request, 'tool.html', {'show_background': False})
+    tools = [
+        {"name": "Tool 1", "id": "tool1"},
+        {"name": "Tool 2", "id": "tool2"},
+    ]
+    return render(request, 'tool.html', {
+        'show_background': False,
+        "tools": tools
+    })
+    
+
+def run_tool(request, tool_id):
+    try:
+        # Import module main.py của tool tương ứng
+        module = importlib.import_module(f"myapp.tools.{tool_id}.main")   # Import file main.py of tool
+        result = module.run()  # Gọi hàm run() trong main.py
+        messages.success(request, f"✅ {tool_id} executed successfully!")
+    except Exception as e:
+        messages.error(request, f"❌ Error running {tool_id}: {str(e)}")
+        
+    # Redirect về trang Tool
+    return redirect('tool')   #The Django messages framework is designed to keep "messages" across redirects without passing them through the URL.
+    
+
+
+
 
