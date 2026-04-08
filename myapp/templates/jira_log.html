@@ -1,0 +1,102 @@
+<!--
+# ============================================================================
+# FILE NAME     : myapp/templates/jira_log.html
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Define jira_log page
+# HISTORY       : 11/11/2025, 09/03/2026
+# ============================================================================
+-->
+
+{% extends "home.html" %}
+{% block title %}Jira Log{% endblock %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static '/jira_log/jira_log.css' %}">
+<!-- Heading -->
+ <div>
+    <img src="{% static '/task_list/asw.png' %}" class="header-logo"/>
+    <h1>Jira Log of Mr Moon</h1>
+<form method="GET" class="search-form">
+        <center>
+        <input type="text" name="search" placeholder="Search keywords" value="{{ query }}">
+        <button type="submit">Search</button>
+        </center>
+ </div>
+
+<!-- Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Time</th> 
+            <th>Name</th>
+            <th>Note</th>
+            <th>Project_Name
+                <select name="project_name" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for p in project_names %}
+                        <option value="{{ p }}" {% if filters.project_name == p %}selected{% endif %}>{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+            <th>Requester
+                <select name="requester" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    {% for r in requesters %}
+                        <option value="{{ r }}" {% if filters.requester == r %}selected{% endif %}>{{ r }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in page_obj %}
+        <tr>
+            <td>{{ task.time }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.note }}</td>
+            <td>{{ task.project_name }}</td>
+            <td>{{ task.requester }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</form>
+ 
+<!-- Pagination -->
+<div class="pagination">
+    {% if page_obj.has_previous %}  <!-- Check has privious page → Display "Previous" button -->
+        <a href="?page={{ page_obj.previous_page_number }}&search={{ query }}&project_name={{ filters.project_name }}&requester={{ filters.requester }}" class="page-link">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+
+        {% if num == 1 or num == 2 or num == page_obj.paginator.num_pages or num == page_obj.paginator.num_pages|add:"-1" or num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
+            
+            {% if num == page_obj.number %}
+                <span class="current-page">{{ num }}</span>
+            {% else %}
+                <a class="page-link"
+                   href="?page={{ num }}&search={{ query }}&project_name={{ filters.project_name }}&requester={{ filters.requester }}">
+                   {{ num }}
+                </a>
+            {% endif %}
+
+        {% elif num == 3 and page_obj.number > 5 %}
+            <span class="dots">…</span>
+
+        {% elif num == page_obj.paginator.num_pages|add:"-2" and page_obj.number < page_obj.paginator.num_pages|add:"-4" %}
+            <span class="dots">…</span>
+        {% endif %}
+    {% endfor %}
+
+
+    {% if page_obj.has_next %} <!-- Check has next page → Display "Next" button -->
+        <a href="?page={{ page_obj.next_page_number }}&search={{ query }}&project_name={{ filters.project_name }}&requester={{ filters.requester }}" class="page-link">Next</a>
+    {% endif %}
+</div>  
+
+
+{% endblock %}

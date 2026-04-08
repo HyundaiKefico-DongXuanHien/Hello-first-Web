@@ -1,3 +1,10 @@
+# ============================================================================
+# FILE NAME     : simple_web/settings.py
+# AUTHOR        : DONG XUAN HIEN
+# DIVISION      : HYUNDAI KEFICO Co.,Ltd.
+# DESCRIPTION   : Setup for website
+# HISTORY       : 05/11/2025, 09/03/2026
+# ============================================================================
 """
 Django settings for simple_web project.
 
@@ -78,7 +85,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': BASE_DIR / 'database.db',  # cursor to available files
+    },
+    'ticket_log': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'ticket_log.db',   # extension can be .db, .sqlite3, .dtb — SQLite doesn't care
     }
+   
 }
 
 

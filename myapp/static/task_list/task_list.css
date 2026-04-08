@@ -132,4 +132,7 @@ table tbody tr:hover {
     border-radius: 4px;
 }
 
-
+.pagination .dots {
+    padding: 6px 12px;
+    margin: 2px;
+}

@@ -1,4 +1,4 @@
-from .cfg import *
+from  myapp.tools.tool1.cfg import *
 import requests
 from bs4 import BeautifulSoup
 from bs4 import BeautifulSoup as bs
@@ -11,9 +11,9 @@ def SESSION(LOGIN_POST_URL, LOGIN_PAYLOAD, LOGIN_HEADER):
     try:
         with requests.Session() as session:
 
-            response_login = session.post(LOGIN_POST_URL, data=LOGIN_PAYLOAD, headers=LOGIN_HEADER)
-            # with open('index.html', 'w', encoding='utf-8') as f:
-            #     f.write(response_login.text)
+            response_login = session.post(LOGIN_POST_URL, json=LOGIN_PAYLOAD, headers=LOGIN_HEADER)
+            with open('index.html', 'w', encoding='utf-8') as f:
+                f.write(response_login.text)
             response_login.raise_for_status() # Check for login errors
             print(f"Login response status code: {response_login.status_code}")
             if response_login.status_code == 200:
@@ -28,7 +28,7 @@ def SESSION(LOGIN_POST_URL, LOGIN_PAYLOAD, LOGIN_HEADER):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
-    
+
 def get_all_keys(session, all_issues_page_url):
     # == Step 1: Downloading the page ==
     all_issues_rq = session.get(all_issues_page_url)
@@ -152,8 +152,18 @@ def tracking_xml_data(xml_data, key):
         updated = datetime_object.strftime('%Y-%m-%d %H:%M:%S')
         print(f"updated: {updated}")
     except Exception as e:
-        created = None
+        updated = None
         print(f"updated error: {e}")  
+        
+    # == Get duedate ==
+    try:
+        due = obj_item.find("due").text
+        datetime_object = datetime.strptime(due, "%a, %d %b %Y %H:%M:%S %z") - two_hours_delta
+        due = datetime_object.strftime('%Y-%m-%d %H:%M:%S')
+        print(f"due: {due}")
+    except Exception as e:
+        due = None
+        print(f"due error: {e}")     
     
     issue_data = (
         key,
@@ -163,7 +173,8 @@ def tracking_xml_data(xml_data, key):
         assignee,
         status,
         created,
-        updated
+        updated,
+        due
     )   
     return issue_data  
 
@@ -207,8 +218,3 @@ def get_all_keys_KVHS(session, all_issues_page_url_kvhs):
     print(issue_key_list)
     return issue_key_list
 
-
-
-
-   
-  
