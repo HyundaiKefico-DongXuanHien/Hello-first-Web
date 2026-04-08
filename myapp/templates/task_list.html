@@ -4,7 +4,7 @@
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
 # DESCRIPTION   : Define task_list page
-# HISTORY       : 11/11/2025
+# HISTORY       : 11/11/2025, 13/02/2026
 # ============================================================================
 -->
 
@@ -73,6 +73,7 @@
             </th>
             <th>Created</th>
             <th>Updated</th>
+            <th>Due</th>
         </tr>
     </thead>
     <tbody>
@@ -92,6 +93,7 @@
             </td>
             <td>{{ task.created }}</td>
             <td>{{ task.updated }}</td>
+            <td>{{ task.due }}</td>
         </tr>
         {% endfor %}
     </tbody>

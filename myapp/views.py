@@ -3,11 +3,11 @@
 # AUTHOR        : DONG XUAN HIEN
 # DIVISION      : HYUNDAI KEFICO Co.,Ltd.
 # DESCRIPTION   : Handle logic to display
-# HISTORY       : 11/11/2025
+# HISTORY       : 11/11/2025, 13/02/2026, 09/03/2026
 # ============================================================================
 
 from django.shortcuts import render
-from .models import issue_data_table, issue_data_table_KVHS
+from .models import issue_data_table, issue_data_table_KVHS, ticket_log_table
 from django.db.models import Q
 from django.core.paginator import Paginator
 
@@ -43,7 +43,8 @@ def task_list(request):
             Q(assignee__icontains=query) |
             Q(status__icontains=query) |
             Q(created__icontains=query) |
-            Q(updated__icontains=query)
+            Q(updated__icontains=query) |
+            Q(due__icontains=query)
         )
     if key_filter: filter_condition &= Q(key=key_filter)
     if priority_filter: filter_condition &= Q(priority=priority_filter)
@@ -91,8 +92,51 @@ def task_list(request):
         'show_background': False
     }) 
 
-def document(request):
-    return render(request, 'document.html', {'show_background': False})
+def jira_log(request):
+    # Get value from search box
+    query = request.GET.get('search', '')  #get value from search bar, if not --> default is blank string
+    
+    # Get value from dropdown
+    project_name_filter = request.GET.get('project_name', '')
+    requester_filter = request.GET.get('requester', '')
+    
+    # Create filter condition
+    filter_condition = Q()
+    if query:
+        filter_condition &= (
+            Q(time__icontains=query) |
+            Q(name__icontains=query) |
+            Q(note__icontains=query) |
+            Q(project_name__icontains=query) |
+            Q(requester__icontains=query)
+        )
+    if project_name_filter: filter_condition &= Q(project_name=project_name_filter)
+    if requester_filter: filter_condition &= Q(requester=requester_filter)
+        
+    # Get value from 2 table in DB               
+    table = ticket_log_table.objects.using('ticket_log').filter(filter_condition)
+    tasks = list(table)
+
+    # Pagination
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(tasks, 20)  # 20 task each page, object devide tasks to many page
+    page_obj = paginator.get_page(page_number)
+
+    # Get unique value list for dropdown
+    project_names = sorted(set(ticket_log_table.objects.using('ticket_log').values_list('project_name', flat=True)))
+    requesters = sorted(set(ticket_log_table.objects.using('ticket_log').values_list('requester', flat=True)))
+
+    return render(request, 'jira_log.html', {
+        'page_obj': page_obj,
+        'query': query,
+        'project_names': project_names,
+        'requesters': requesters,
+        'filters': {
+            'project_name': project_name_filter,
+            'requester': requester_filter
+        },
+        'show_background': False
+    }) 
 
 def report(request):
     return render(request, 'report.html', {'show_background': False})

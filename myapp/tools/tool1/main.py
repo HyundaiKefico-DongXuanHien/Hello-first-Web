@@ -1,6 +1,6 @@
 import time
-from .jira_scan import *
-from .interact_dtb import *
+from  myapp.tools.tool1.jira_scan import *
+from  myapp.tools.tool1.interact_dtb import *
 
 def run():
     '''========== TRACKING KGP =========='''
@@ -23,6 +23,10 @@ def run():
         xml_data = export_xml_data(session, key)
         issue_data = tracking_xml_data(xml_data, key)   
         save_issue_to_database_KVHS(issue_data)   
+        
+
+    
+    
     
     
     
